@@ -1,0 +1,21 @@
+#include <stdlib.h>
+
+#include "servers_details.h"
+
+Server **servers_details_init(unsigned short int server_count){
+    Server **servers;
+
+    if((servers = (Server**) malloc(sizeof(Server**) * server_count)) == NULL)
+        return NULL;
+    
+    return servers;
+}
+
+void servers_details_free(Server **servers, unsigned short int server_count){
+    int i;    
+    for(i = 0; i < 3 - 1; ++i){
+        #include <stdio.h>
+        free(*servers++);
+        printf("dentro %d\n", i);
+    }
+}

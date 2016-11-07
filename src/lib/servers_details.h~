@@ -1,0 +1,71 @@
+#ifndef SERVERS_DETAILS_H
+#define SERVERS_DETAILS_H
+
+typedef struct HDD{
+    char *device;
+    unsigned int boot;
+    unsigned int start;
+    unsigned int end;
+    unsigned int sectors;
+    unsigned int size;
+    unsigned int id;
+    char *type;
+} HDDPart;
+
+typedef struct{
+    unsigned int size;	// HDD size in bytes
+    unsigned int partitions_number;
+    HDDPart *partitions;
+} HardDisk;
+
+/* See /proc/meminfo */
+typedef struct{
+    unsigned int total;
+    unsigned int used;
+    unsigned int free;
+    unsigned int shared;
+    unsigned int buffers;
+    unsigned int cached;
+} Memory;
+
+typedef struct{
+    unsigned int total;
+    unsigned int used;
+    unsigned int free;
+} Swap;
+
+typedef struct{
+    unsigned short int processor_number;
+} Processor;
+
+typedef struct{
+    unsigned short int processors_number;
+    Processor *cpu_processors;
+} CPUInfo;
+
+typedef struct{
+    float one_minute_average;
+    float five_minute_average;
+    float fifteen_minute_average;
+} CPULoad;
+
+typedef struct{
+    CPUInfo cpu_hw_info;
+    CPULoad cpu_load_average;
+} CPU;
+
+typedef struct{
+    HardDisk hard_disk_details;
+    Memory memory_details;
+    Swap swap_details;
+    CPU cpu_details;
+} ServerHW;
+
+typedef struct{
+    ServerHW server_hardware;
+} Server;
+
+Server **servers_details_init(unsigned short int server_count);
+void servers_details_free(Server **servers, unsigned short int server_count);
+
+#endif
