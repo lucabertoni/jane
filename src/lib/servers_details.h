@@ -1,7 +1,7 @@
 #ifndef SERVERS_DETAILS_H
 #define SERVERS_DETAILS_H
 
-typedef struct HDD{
+struct HDDPart{
     char *device;
     unsigned int boot;
     unsigned int start;
@@ -10,12 +10,12 @@ typedef struct HDD{
     unsigned int size;
     unsigned int id;
     char *type;
-} HDDPart;
+};
 
 struct HardDisk{
     unsigned int size;	// HDD size in bytes
     unsigned int partitions_number;
-    HDDPart *partitions;
+    struct HDDPart *partitions;
 };
 
 /* See /proc/meminfo */
@@ -50,22 +50,23 @@ struct CPULoad{
 };
 
 struct CPU{
-    struct CPUInfo cpu_hw_info;
-    struct CPULoad cpu_load_average;
+    struct CPUInfo *cpu_hw_info;
+    struct CPULoad *cpu_load_average;
 };
 
 struct ServerHW{
-    struct HardDisk hard_disk_details;
-    struct Memory memory_details;
-    struct Swap swap_details;
-    struct CPU cpu_details;
+    struct HardDisk *hard_disk_details;
+    struct Memory *memory_details;
+    struct Swap *swap_details;
+    struct CPU *cpu_details;
 };
 
 struct Server{
-    struct ServerHW server_hardware;
+    struct ServerHW *server_hardware;
 };
 
 struct Server **servers_details_init(unsigned short int server_count);
 void servers_details_free(struct Server **servers, unsigned short int server_count);
-
+struct ServerHW *server_details_serverhw_init();
+struct HardDisk *server_details_harddisk_init();
 #endif

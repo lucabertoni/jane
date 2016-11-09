@@ -19,3 +19,14 @@ void servers_details_free(struct Server **servers, unsigned short int server_cou
         printf("dentro %d\n", i);
     }
 }
+
+struct ServerHW *server_details_serverhw_init(){
+    return (struct ServerHW*) malloc(sizeof(struct ServerHW*));
+}
+
+struct HardDisk *server_details_harddisk_init(){
+        return (struct HardDisk*) malloc(sizeof(struct HardDisk*));
+}
+
+
+}
