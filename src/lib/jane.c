@@ -15,5 +15,6 @@ int jane_get_server_hardware_details(const ssh_session jane_ssh_session, struct 
     if((server_details->server_hardware == NULL) || (server_details_serverhw_init(server_details) == JANE_ERROR_GENERIC_STRUCT_ALLOC_ERROR))
         return JANE_ERROR_GENERIC_STRUCT_ALLOC_ERROR;
 
+//    jane_ssh_get
     return 0;
 }
