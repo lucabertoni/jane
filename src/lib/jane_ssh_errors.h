@@ -8,6 +8,7 @@
 #define	JANE_SSH_ERROR_CONNECTION_ERROR 0x03
 #define	JANE_SSH_ERROR_DISCONNECT_FAILED_NO_CONNECTION_FOUND 0x04
 
+extern uint16_t jane_ssh_error;
 uint16_t jane_ssh_error = JANE_SSH_ERROR_NO_ERROR;
 
 uint8_t jane_ssh_connected = 0;
