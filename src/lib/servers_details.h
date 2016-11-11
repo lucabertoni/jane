@@ -12,13 +12,6 @@ struct HDDPart{
     char *type;
 };
 
-struct HardDisk{
-    unsigned int size;	// HDD size in bytes
-    unsigned int partitions_number;
-    struct HDDPart *partitions;
-};
-
-/* See /proc/meminfo */
 struct Memory{
     unsigned int total;
     unsigned int used;
@@ -54,6 +47,12 @@ struct CPU{
     struct CPULoad *cpu_load_average;
 };
 
+struct HardDisk{
+    unsigned int size;	// HDD size in bytes
+    unsigned int partitions_number;
+    struct HDDPart *partitions;
+};
+
 struct ServerHW{
     struct HardDisk *hard_disk_details;
     struct Memory *memory_details;
@@ -65,8 +64,8 @@ struct Server{
     struct ServerHW *server_hardware;
 };
 
+int server_details_serverhw_init(struct Server *server_details);
 struct Server **servers_details_init(unsigned short int server_count);
 void servers_details_free(struct Server **servers, unsigned short int server_count);
-struct ServerHW *server_details_serverhw_init();
-struct HardDisk *server_details_harddisk_init();
+void server_details_serverhw_free(struct ServerHW* server_hardware);
 #endif

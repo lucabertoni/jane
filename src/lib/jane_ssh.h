@@ -6,8 +6,8 @@
 #ifndef JANE_SSH_H
 #define JANE_SSH_H
 
-extern uint16_t jane_ssh_error;
-extern uint8_t jane_ssh_connected;
+//extern uint16_t jane_ssh_error;
+//extern uint8_t jane_ssh_connected;
 
 struct jane_ssh_session_connection_options{
     char *ip_address;

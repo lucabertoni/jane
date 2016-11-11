@@ -2,23 +2,26 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "servers_details.h"
+#include <libssh/libssh.h>
 
-extern uint8_t jane_ssh_error;
+#include "servers_details.h"
+#include "jane_ssh.h"
+#include "jane.h"
 
 int main(){
     struct Server **servers, **head;
+    ssh_session jane_ssh_session;
+    struct jane_ssh_session_connection_options options = {"127.0.0.1", 22, SSH_LOG_PROTOCOL};
     
     servers = servers_details_init(3);
     
-    printf("Error %d\n", jane_ssh_error);
-    
     head = servers;
-    printf("%p|%p\n",servers,head);
     *servers = (struct Server*) malloc(sizeof(struct Server*));
     servers++;
     *servers = (struct Server*) malloc(sizeof (struct Server*));
-    printf("%p|%p\n",servers,head);
+
+    jane_ssh_session = jane_ssh_session_init(&options);
+    jane_get_remote_server_details(jane_ssh_session, *head);
     
     servers_details_free(head, 2);
     
