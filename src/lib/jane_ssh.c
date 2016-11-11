@@ -1,5 +1,9 @@
 #include "jane_ssh.h"
 
+uint16_t jane_ssh_error = JANE_SSH_ERROR_NO_ERROR;
+
+uint8_t jane_ssh_connected = 0;
+
 ssh_session jane_ssh_session_init(const struct jane_ssh_session_connection_options *options){
     ssh_session session;
     
