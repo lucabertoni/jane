@@ -1,4 +1,5 @@
 #include <libssh/libssh.h>
+#include <libssh/sftp.h>
 #include <stdint.h>
 
 #include "jane_ssh_errors.h"
@@ -17,7 +18,13 @@ struct jane_ssh_session_connection_options{
 
 ssh_session jane_ssh_session_init(const struct jane_ssh_session_connection_options *options);
 void jane_ssh_session_free(ssh_session session);
+
+int jane_ssh_verify_knownhost(ssh_session session);
+
 int jane_ssh_session_connect(ssh_session session);
 void jane_ssh_session_disconnect(ssh_session session);
+
+char* jane_ssh_get_remote_file(ssh_session, const unsigned char *file_name);
+int jane_ssh_get_remote_file(ssh_session, const unsigned char *file_name, const unsigned char *file_name_dest);
 
 #endif
