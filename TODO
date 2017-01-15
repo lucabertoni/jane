@@ -2,4 +2,11 @@
 	* Get mounted devices on server
 * Cli
 	* Config file
-		* Parametric ssh verbosity
+		* Parametric ssh verbosityIl file binario .git/index corrisponde
+
+> grep -R TODO >> TODO
+src/lib/servers_details.c:    // TODO: Continuare qui
+src/lib/jane_ssh.c:    // TODO: continuare
+src/lib/jane_ssh.c:    // TODO: continuare da qui
+src/lib/jane.c:    // TODO: Continuare qui
+src/lib/servers_details.h:    // TODO: Aggiungere le restanti (e relativi init e free)
