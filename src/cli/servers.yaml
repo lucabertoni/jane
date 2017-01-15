@@ -1,0 +1,12 @@
+-   server_id           :   !!str 1 # or whatever you want, like a personal code (ex: 0A124F), it will then be translated into a string
+    server_name         :   Main "jane" server
+    server_domain       :   www.mywebsite.com
+    server_ip_address   :   127.0.0.1
+    server_ssh_port     :   22
+    server_mac_address  :   # if empty it will be filled
+-   server_id           :   !!str 2 # or whatever you want, like a personal code (ex: 0A124F), it will then be translated into a string
+    server_name         :   Another server
+    server_domain       :   www.mysecondwebsite.com
+    server_ip_address   :   192.168.0.10
+    server_ssh_port     :   22
+    server_mac_address  :   # if empty it will be filled

@@ -1,17 +1,6 @@
 #ifndef SERVERS_DETAILS_H
 #define SERVERS_DETAILS_H
 
-struct HDDPart{
-    char *device;
-    unsigned int boot;
-    unsigned int start;
-    unsigned int end;
-    unsigned int sectors;
-    unsigned int size;
-    unsigned int id;
-    char *type;
-};
-
 struct Memory{
     unsigned int total;
     unsigned int used;
@@ -47,6 +36,17 @@ struct CPU{
     struct CPULoad *cpu_load_average;
 };
 
+struct HDDPart{
+    char *device;
+    unsigned int boot;
+    unsigned int start;
+    unsigned int end;
+    unsigned int sectors;
+    unsigned int size;
+    unsigned int id;
+    char *type;
+};
+
 struct HardDisk{
     unsigned int size;	// HDD size in bytes
     unsigned int partitions_number;
@@ -62,10 +62,13 @@ struct ServerHW{
 
 struct Server{
     struct ServerHW *server_hardware;
+    // TODO: Aggiungere le restanti (e relativi init e free)
 };
 
 int server_details_serverhw_init(struct Server *server_details);
 struct Server **servers_details_init(unsigned short int server_count);
 void servers_details_free(struct Server **servers, unsigned short int server_count);
-void server_details_serverhw_free(struct ServerHW* server_hardware);
+void server_details_serverhw_free(struct Server *server);
+struct Server **server_details_load_from_file(const char* file_name);
+
 #endif

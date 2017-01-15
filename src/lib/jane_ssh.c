@@ -32,69 +32,7 @@ void jane_ssh_session_free(ssh_session session){
 }
 
 int jane_ssh_verify_knownhost(ssh_session session){
-	int state, hlen;
-	unsigned char *hash = NULL;
-	char *hexa;
-	char buf[10];
-	
-	state = ssh_is_server_known(session);
-	
-	hlen = ssh_get_pubkey_hash(session, &hash);
-	if (hlen < 0)
-		return -1;
-		
-	switch (state)
-	{
-		case SSH_SERVER_KNOWN_OK:
-			break;
-			
-		case SSH_SERVER_KNOWN_CHANGED:
-			fprintf(stderr, "JANE_SSH -> Host key for server changed: it is now:\n");
-			
-			ssh_print_hexa("JANE_SSH -> Public key hash", hash, hlen);
-			
-			fprintf(stderr, "JANE_SSH -> For security reasons, connection will be stopped\n");
-			
-			free(hash);
-			
-			return JANE_SSH_ERROR_UNKNOWN_HOST;
-			
-		case SSH_SERVER_FOUND_OTHER:
-			fprintf(stderr, "JANE_SSH -> The host key for this server was not found but an other type of key exists.\n");
-			
-			fprintf(stderr, "JANE_SSH -> An attacker might change the default server key to confuse your client into thinking the key does not exist\n");
-			
-			free(hash);
-			
-			return JANE_SSH_ERROR_UNKNOWN_HOST;
-			
-		case SSH_SERVER_FILE_NOT_FOUND:
-			fprintf(stderr, "JANE_SSH -> Could not find known host file. The file will be automatically created.\n");
 
-		case SSH_SERVER_NOT_KNOWN:
-			hexa = ssh_get_hexa(hash, hlen);
-			
-			fprintf(stderr, "JANE_SSH -> Public key hash: %s\n", hexa);
-			
-			free(hexa);
-
-			// Create the known host file			
-			if (ssh_write_knownhost(session) < 0)
-			{
-				fprintf(stderr, "JANE_SSH -> Cannot create known host file.  Error %s\n", strerror(errno));
-				free(hash);
-				return JANE_SSH_ERROR_UNKNOWN_HOST;
-			}
-			
-			break;
-
-		case SSH_SERVER_ERROR:
-			fprintf(stderr, "JANE_SSH -> Error %s", ssh_get_error(session));
-			free(hash);
-			return JANE_SSH_ERROR_UNKNOWN_HOST;
-	}
-
-	free(hash);
 	return 0;
 }
 
@@ -121,9 +59,12 @@ void jane_ssh_session_disconnect(ssh_session session){
     }    
 }
 
-char* jane_ssh_get_remote_file(ssh_session, const unsigned char *file_name){
-    unsigned char *buffer;
-
+// Ridefinire params!!!
+/*
+char* jane_ssh_get_remote_file(ssh_session, const unsigned char *file_name)
+int jane_ssh_get_remote_file(ssh_session, const unsigned char *file_name, const unsigned char *file_name_dest);
+*/
+int jane_ssh_get_remote_file(ssh_session session, const unsigned char *file_name){
     sftp_session sftp;
     int rc;
     sftp = sftp_new(session);
@@ -137,7 +78,7 @@ char* jane_ssh_get_remote_file(ssh_session, const unsigned char *file_name){
     rc = sftp_init(sftp);
     if (rc != SSH_OK)
     {
-        fprintf(stderr, "JANE_SSH -> Error initializing SFTP session: %s.\n", sftp_get_error(sftp));
+        fprintf(stderr, "JANE_SSH -> Error initializing SFTP session. sftp error no.: %d.\n", sftp_get_error(sftp));
         sftp_free(sftp);
         return rc;
     }
@@ -145,4 +86,6 @@ char* jane_ssh_get_remote_file(ssh_session, const unsigned char *file_name){
     // TODO: continuare da qui
 
     sftp_free(sftp);
+
+    return -1;
 }

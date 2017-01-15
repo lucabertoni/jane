@@ -9,4 +9,6 @@
 int jane_get_remote_server_details(const ssh_session jane_ssh_session, struct Server *server_details);
 int jane_get_server_hardware_details(const ssh_session jane_ssh_session, struct Server *server_details);
 int jane_get_server_hardware_harddisk_details(const ssh_session jane_ssh_session, struct Server *server_details);
+
+void jane_log(unsigned short int log_level, unsigned char* message);
 #endif

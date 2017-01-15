@@ -7,23 +7,26 @@
 #include "servers_details.h"
 #include "jane_ssh.h"
 #include "jane.h"
+#include "errors.h"
 
-int main(){
-    struct Server **servers, **head;
-    ssh_session jane_ssh_session;
-    struct jane_ssh_session_connection_options options = {"127.0.0.1", 22, SSH_LOG_PROTOCOL};
-    
-    servers = servers_details_init(3);
-    
-    head = servers;
-    *servers = (struct Server*) malloc(sizeof(struct Server*));
-    servers++;
-    *servers = (struct Server*) malloc(sizeof (struct Server*));
+extern uint16_t jane_error;
 
-    jane_ssh_session = jane_ssh_session_init(&options);
-    jane_get_remote_server_details(jane_ssh_session, *head);
+int main(int argc, char *argv[]){
+    struct Server **servers;
+    // ssh_session jane_ssh_session;
+    // struct jane_ssh_session_connection_options options = {"127.0.0.1", 22, SSH_LOG_PROTOCOL};
+
+    servers = server_details_load_from_file("servers.yaml");
     
-    servers_details_free(head, 2);
+    if(servers == NULL){
+        fprintf(stderr, "%s -> Error occurred while allocating memory needed to contain servers details. Error no.: %d. More info at: %s\n", *argv, jane_error, JANE_ERROR_DOC);
+        exit(jane_error);
+    }
+
+    //jane_ssh_session = jane_ssh_session_init(&options);
+    //jane_get_remote_server_details(jane_ssh_session, *head);
+    
+    servers_details_free(servers, 3);
     
     return 0;
 }
