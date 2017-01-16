@@ -3,6 +3,7 @@
 
 #include "servers_details.h"
 #include "errors.h"
+#include "jane.h"
 
 extern uint16_t jane_error;
 
